@@ -1,24 +1,31 @@
 {
-	"expo": {
-		"name": "Tic-Tac-Native",
-		"slug": "tic-tac-native",
-		"privacy": "public",
-		"sdkVersion": "32.0.0",
-		"platforms": ["ios", "android"],
-		"version": "1.0.0",
-		"orientation": "portrait",
-		"icon": "./assets/images/icon.png",
-		"splash": {
-			"image": "./assets/images/splash.png",
-			"resizeMode": "contain",
-			"backgroundColor": "#ffffff"
-		},
-		"updates": {
-			"fallbackToCacheTimeout": 0
-		},
-		"assetBundlePatterns": ["**/*"],
-		"ios": {
-			"supportsTablet": true
-		}
-	}
+  "expo": {
+    "name": "Tic-Tac-Native",
+    "slug": "tic-tac-native",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "description": "A native take on Tic-Tac-Toe",
+    "githubUrl": "https://github.com/Wolven531/Tic-Tac-Native.git"
+  }
 }
