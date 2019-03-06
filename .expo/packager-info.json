@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 2192,
   "expoServerNgrokUrl": "https://8z-xd5.wolven531.tic-tac-native.exp.direct",
   "packagerNgrokUrl": "https://packager.8z-xd5.wolven531.tic-tac-native.exp.direct",
-  "ngrokPid": 1530
+  "ngrokPid": 2219
 }
