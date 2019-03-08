@@ -1,5 +1,7 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+
+import { Cell } from './Cell'
 
 class Grid extends React.Component {
 	render() {
@@ -14,9 +16,7 @@ class Grid extends React.Component {
 				{gridRows.map((row, rowInd) =>
 					<View style={styles.rowStyle} key={`row${rowInd}`}>
 						{row.map((cell, cellInd) =>
-							<TouchableOpacity style={styles.cell} key={`cell${cellInd}`}>
-								<Text>{cell}</Text>
-							</TouchableOpacity>)}
+							<Cell key={`cell${cellInd}`} display={cell} />)}
 					</View>)}
 			</View>
 		)
@@ -24,16 +24,6 @@ class Grid extends React.Component {
 }
 
 const styles = StyleSheet.create({
-	cell: {
-		alignItems: 'center',
-		backgroundColor: 'rgba(0,255,0,.7)',
-		borderColor: '#000',
-		borderStyle: 'solid',
-		borderWidth: 1,
-		height: 75,
-		justifyContent: 'center',
-		width: '33.33%'
-	},
 	gridStyle: {
 		backgroundColor: 'rgba(0,200,200,.5)',
 		marginTop: 20,
