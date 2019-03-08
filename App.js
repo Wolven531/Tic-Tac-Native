@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		flex: 1,
 		flexDirection: 'column',
+		fontFamily: 'Arial',
 		justifyContent: 'center'
 	}
 })
