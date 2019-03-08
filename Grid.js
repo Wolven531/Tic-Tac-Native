@@ -3,41 +3,21 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 class Grid extends React.Component {
 	render() {
+		const gridRows = [
+			['X','X','X'],
+			['O','O','O'],
+			['X','X','X']
+		]
+
 		return (
 			<View style={styles.gridStyle}>
-				<View style={styles.rowStyle}>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={styles.rowStyle}>
-					<TouchableOpacity style={styles.cell}>
-						<Text>O</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>O</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>O</Text>
-					</TouchableOpacity>
-				</View>
-				<View style={styles.rowStyle}>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-					<TouchableOpacity style={styles.cell}>
-						<Text>X</Text>
-					</TouchableOpacity>
-				</View>
+				{gridRows.map((row, rowInd) =>
+					<View style={styles.rowStyle} key={`row${rowInd}`}>
+						{row.map((cell, cellInd) =>
+							<TouchableOpacity style={styles.cell} key={`cell${cellInd}`}>
+								<Text>{cell}</Text>
+							</TouchableOpacity>)}
+					</View>)}
 			</View>
 		)
 	}
