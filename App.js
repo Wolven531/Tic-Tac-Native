@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 
 import { Grid } from './Grid'
 
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		flex: 1,
 		flexDirection: 'column',
-		fontFamily: 'Arial',
+		fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Arial',
 		justifyContent: 'center'
 	}
 })
