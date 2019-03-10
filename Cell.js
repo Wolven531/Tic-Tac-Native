@@ -2,14 +2,36 @@ import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 class Cell extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			display: props.display || ''
+		}
+	}
+
 	render() {
-		const { display } = this.props
+		const { display } = this.state
 
 		return (
-			<TouchableOpacity style={styles.cell}>
+			<TouchableOpacity style={styles.cell} onPress={this.onCellPress}>
 				<Text>{display}</Text>
 			</TouchableOpacity>
 		)
+	}
+
+	onCellPress = () => {
+		switch (this.state.display) {
+			case '':
+				this.setState({ display: 'X' })
+			break
+			case 'X':
+				this.setState({ display: 'O' })
+			break
+			case 'O':
+			default:
+				this.setState({ display: '' })
+			break
+		}
 	}
 }
 
