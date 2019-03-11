@@ -1,16 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 class Cell extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			display: props.display || ''
-		}
-	}
-
 	render() {
-		const { display } = this.state
+		const { display } = this.props
 
 		return (
 			<TouchableOpacity style={styles.cell} onPress={this.onCellPress}>
@@ -20,19 +14,24 @@ class Cell extends React.Component {
 	}
 
 	onCellPress = () => {
-		switch (this.state.display) {
+		switch (this.props.display) {
 			case '':
-				this.setState({ display: 'X' })
-			break
+				this.props.onCellPress('X')
+				break
 			case 'X':
-				this.setState({ display: 'O' })
-			break
+				this.props.onCellPress('O')
+				break
 			case 'O':
 			default:
-				this.setState({ display: '' })
+				this.props.onCellPress('')
 			break
 		}
 	}
+}
+
+Cell.propTypes = {
+	display: PropTypes.string.isRequired,
+	onCellPress: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
