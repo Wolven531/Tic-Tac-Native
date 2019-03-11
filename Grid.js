@@ -10,7 +10,7 @@ class Grid extends React.Component {
 		this.state = {
 			gridRows: [
 				['X','','X'],
-				['','X',''],
+				['','O',''],
 				['X','','X']
 			]
 		}
@@ -34,7 +34,7 @@ class Grid extends React.Component {
 
 	updateBoardCell = (row, col, newVal) => {
 		const updatedGrid = [...this.state.gridRows]
-		if (!updatedGrid[row] || !updatedGrid[row][col]) {
+		if (updatedGrid[row] === undefined || updatedGrid[row][col] === undefined) {
 			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
 			return
 		}
@@ -45,8 +45,18 @@ class Grid extends React.Component {
 
 const styles = StyleSheet.create({
 	gridStyle: {
-		backgroundColor: 'rgba(0,200,200,.5)',
+		borderColor: '#000',
+		borderStyle: 'solid',
+		borderWidth: 1,
+		shadowColor: '#000',
+		shadowOffset: {
+			height: 5,
+			width: 5
+		},
+		shadowOpacity: 1,
+		shadowRadius: 3,
 		marginTop: 20,
+		// overflow: 'hidden',
 		width: '80%'
 	},
 	rowStyle: {

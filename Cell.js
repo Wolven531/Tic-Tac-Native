@@ -5,10 +5,16 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 class Cell extends React.Component {
 	render() {
 		const { display } = this.props
+		const cellStyles = [styles.cell]
+		if (display === 'X') {
+			cellStyles.push(styles.cellX)
+		} else if (display === 'O') {
+			cellStyles.push(styles.cellO)
+		}
 
 		return (
-			<TouchableOpacity style={styles.cell} onPress={this.onCellPress}>
-				<Text>{display}</Text>
+			<TouchableOpacity style={cellStyles} onPress={this.onCellPress}>
+				<Text style={styles.cellText}>{display}</Text>
 			</TouchableOpacity>
 		)
 	}
@@ -37,13 +43,31 @@ Cell.propTypes = {
 const styles = StyleSheet.create({
 	cell: {
 		alignItems: 'center',
-		backgroundColor: 'rgba(0,255,0,.7)',
-		borderColor: '#000',
-		borderStyle: 'solid',
-		borderWidth: 1,
 		height: 75,
 		justifyContent: 'center',
-		width: '33.33%'
+		shadowColor: '#000',
+		shadowOffset: {
+			height: 1,
+			width: 1
+		},
+		shadowOpacity: 1,
+		shadowRadius: 1,
+		width: '33.45%'
+	},
+	cellText: {
+		color: '#fff',
+		textShadowColor: '#000',
+		textShadowOffset: {
+			height: 1,
+			width: 1
+		},
+		textShadowRadius: 1
+	},
+	cellX: {
+		backgroundColor: 'rgba(225,0,0,.8)'
+	},
+	cellO: {
+		backgroundColor: 'rgba(0,0,225,.8)'
 	}
 })
 
