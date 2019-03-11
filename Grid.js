@@ -34,6 +34,10 @@ class Grid extends React.Component {
 
 	updateBoardCell = (row, col, newVal) => {
 		const updatedGrid = [...this.state.gridRows]
+		if (!updatedGrid[row] || !updatedGrid[row][col]) {
+			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
+			return
+		}
 		updatedGrid[row][col] = newVal
 		this.setState({ gridRows: updatedGrid })
 	}
