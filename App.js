@@ -8,7 +8,11 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				<Grid />
+				<Grid gridRows={[
+					['X','','X'],
+					['','O',''],
+					['X','','X']
+				]} />
 			</View>
 		)
 	}
