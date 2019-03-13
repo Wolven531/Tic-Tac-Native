@@ -31,14 +31,14 @@ class Grid extends React.Component {
 	}
 
 	updateBoardCell = (row, col, newVal) => {
-		const updatedGrid = [...this.state.gridRows]
+		const updatedGrid = [...this.props.gridRows]
 		if (updatedGrid[row] === undefined ||
 			updatedGrid[row][col] === undefined) {
 			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
 			return
 		}
 		updatedGrid[row][col] = newVal
-		this.setState({ gridRows: updatedGrid })
+		this.props.onGridUpdated(updatedGrid)
 	}
 }
 
@@ -52,7 +52,8 @@ class Grid extends React.Component {
 		]
 */
 Grid.propTypes = {
-	gridRows: PropTypes.arrayOf(PropTypes.array).isRequired
+	gridRows: PropTypes.arrayOf(PropTypes.array).isRequired,
+	onGridUpdated: PropTypes.func.isRequired
 }
 
 const styles = StyleSheet.create({
