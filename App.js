@@ -4,18 +4,27 @@ import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Grid } from './Grid'
 
 export default class App extends React.Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			gridRows: [
+				['X','','X'],
+				['','O',''],
+				['X','','X']
+			]
+		}
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				<Grid gridRows={[
-					['X','','X'],
-					['','O',''],
-					['X','','X']
-				]} />
+				<Grid gridRows={this.state.gridRows} onGridUpdated={this.onGridUpdated} />
 			</View>
 		)
 	}
+
+	onGridUpdated = updatedGrid => this.setState({gridRows: updatedGrid})
 }
 
 const styles = StyleSheet.create({
