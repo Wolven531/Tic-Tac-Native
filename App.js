@@ -25,8 +25,25 @@ export default class App extends React.Component {
 		)
 	}
 
+	rowHasWinner = row => {
+		const leftCol = row[0]
+		const middleCol = row[1]
+		const rightCol = row[2]
+
+		return leftCol !== '' && (leftCol === middleCol && middleCol === rightCol)
+	}
+
 	boardHasWinner = () => {
-		return false
+		const { gridRows } = this.state
+
+		return this.rowHasWinner([ gridRows[0][0], gridRows[0][1], gridRows[0][2] ])
+			|| this.rowHasWinner([ gridRows[1][0], gridRows[1][1], gridRows[1][2] ])
+			|| this.rowHasWinner([ gridRows[2][0], gridRows[2][1], gridRows[2][2] ])
+			|| this.rowHasWinner([ gridRows[0][0], gridRows[1][0], gridRows[2][0] ])
+			|| this.rowHasWinner([ gridRows[0][1], gridRows[1][1], gridRows[2][1] ])
+			|| this.rowHasWinner([ gridRows[0][2], gridRows[1][2], gridRows[2][2] ])
+			|| this.rowHasWinner([ gridRows[0][0], gridRows[1][1], gridRows[2][2] ])
+			|| this.rowHasWinner([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
 	}
 
 	onGridUpdated = updatedGrid => this.setState({gridRows: updatedGrid})
