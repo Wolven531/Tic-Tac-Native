@@ -19,9 +19,14 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
+				<Text>Board Has Winner: {this.boardHasWinner() ? 'True' : 'False'}</Text>
 				<Grid gridRows={this.state.gridRows} onGridUpdated={this.onGridUpdated} />
 			</View>
 		)
+	}
+
+	boardHasWinner = () => {
+		return false
 	}
 
 	onGridUpdated = updatedGrid => this.setState({gridRows: updatedGrid})
