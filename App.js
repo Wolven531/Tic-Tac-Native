@@ -31,39 +31,20 @@ export default class App extends React.Component {
 	checkForBoardWin = () => {
 		const { gridRows } = this.state
 
-		let result = this.checkForRowWin([ gridRows[0][0], gridRows[0][1], gridRows[0][2] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[1][0], gridRows[1][1], gridRows[1][2] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[2][0], gridRows[2][1], gridRows[2][2] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[0][0], gridRows[1][0], gridRows[2][0] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[0][1], gridRows[1][1], gridRows[2][1] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[0][2], gridRows[1][2], gridRows[2][2] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[0][0], gridRows[1][1], gridRows[2][2] ])
-		if (result !== '') {
-			return result
-		}
-		result = this.checkForRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
-		if (result !== '') {
-			return result
-		}
-		return ''
+		const checks = [
+			this.checkForRowWin([ gridRows[0][0], gridRows[0][1], gridRows[0][2] ]),
+			this.checkForRowWin([ gridRows[1][0], gridRows[1][1], gridRows[1][2] ]),
+			this.checkForRowWin([ gridRows[2][0], gridRows[2][1], gridRows[2][2] ]),
+			this.checkForRowWin([ gridRows[0][0], gridRows[1][0], gridRows[2][0] ]),
+			this.checkForRowWin([ gridRows[0][1], gridRows[1][1], gridRows[2][1] ]),
+			this.checkForRowWin([ gridRows[0][2], gridRows[1][2], gridRows[2][2] ]),
+			this.checkForRowWin([ gridRows[0][0], gridRows[1][1], gridRows[2][2] ]),
+			this.checkForRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
+		]
+
+		const winner = checks.find(result => result !== '')
+
+		return winner || ''
 	}
 
 	checkForRowWin = row => {
