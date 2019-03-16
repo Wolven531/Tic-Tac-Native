@@ -7,23 +7,27 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			currentPlayer: 'X',
 			gridRows: [
-				['X','','X'],
-				['','O',''],
-				['X','','X']
+				['','',''],
+				['','',''],
+				['','','']
 			]
 		}
 	}
 
 	render() {
+		const { currentPlayer, gridRows } = this.state
 		const winner = this.checkForBoardWin()
-		const winnerDisplay = winner === '' ? 'Board has no winner' : `Winner: ${winner}`
+		const hasWinner = winner === ''
+		const winnerDisplay = hasWinner ? 'Board has no winner' : `Winner: ${winner}`
 
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				<Text>{winnerDisplay}</Text>
-				<Grid gridRows={this.state.gridRows} onGridUpdated={this.onGridUpdated} />
+				<Text>Player: {currentPlayer}</Text>
+				{hasWinner && <Text>{winnerDisplay}</Text>}
+				<Grid gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
 			</View>
 		)
 	}
