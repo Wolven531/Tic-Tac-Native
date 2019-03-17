@@ -27,7 +27,8 @@ export default class App extends React.Component {
 				<Text>Tic Tac Toe</Text>
 				<Text>Player: {currentPlayer}</Text>
 				{hasWinner && <Text>{winnerDisplay}</Text>}
-				<Grid gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
+				<Grid currentPlayer={currentPlayer} gridRows={gridRows}
+					onGridUpdated={this.onGridUpdated} />
 			</View>
 		)
 	}
@@ -56,7 +57,7 @@ export default class App extends React.Component {
 		const middleCol = row[1]
 		const rightCol = row[2]
 
-		if(leftCol !== '' && (leftCol === middleCol && middleCol === rightCol)) {
+		if (leftCol !== '' && (leftCol === middleCol && middleCol === rightCol)) {
 			return leftCol
 		}
 		return ''
