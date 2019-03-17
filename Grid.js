@@ -6,7 +6,7 @@ import { Cell } from './Cell'
 
 class Grid extends React.Component {
 	render() {
-		const { gridRows } = this.props
+		const { currentPlayer, gridRows } = this.props
 
 		return (
 			<View style={styles.gridStyle}>
@@ -20,7 +20,7 @@ class Grid extends React.Component {
 									this.updateBoardCell(
 										rowInd,
 										cellInd,
-										newValue
+										currentPlayer
 									)
 								}
 							/>
@@ -38,6 +38,10 @@ class Grid extends React.Component {
 			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
 			return
 		}
+		if (updatedGrid[row][col] !== '') {
+			console.warn(`Cannot write; cell set previously: row=${row} col=${col} newVal="${newVal}" cellPrev="${updatedGrid[row][col]}"`)
+			return
+		}
 		updatedGrid[row][col] = newVal
 		this.props.onGridUpdated(updatedGrid)
 	}
@@ -53,6 +57,7 @@ class Grid extends React.Component {
 		]
 */
 Grid.propTypes = {
+	currentPlayer: PropTypes.string.isRequired,
 	gridRows: PropTypes.arrayOf(PropTypes.array).isRequired,
 	onGridUpdated: PropTypes.func.isRequired
 }
