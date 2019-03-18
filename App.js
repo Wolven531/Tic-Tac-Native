@@ -27,9 +27,11 @@ export default class App extends React.Component {
 				<Text>Tic Tac Toe</Text>
 				<View style={styles.currentPlayer}>
 					<Text>Current Turn:</Text>
-					<Text style={currentPlayer === 'X' ? styles.xPlayer : styles.oPlayer}>{currentPlayer}</Text>
+					<Text style={currentPlayer === 'X' ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
 				</View>
-				{hasWinner && <Text>{winnerDisplay}</Text>}
+				{hasWinner && <View style={styles.currentPlayer}>
+					<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
+				</View>}
 				<Grid currentPlayer={currentPlayer} gridRows={gridRows}
 					onGridUpdated={this.onGridUpdated} />
 			</View>
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		padding: 5
 	},
-	oPlayer: {
+	playerO: {
 		backgroundColor: '#00f',
 		borderColor: '#000',
 		// borderRadius: 50,
@@ -100,13 +102,24 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		padding: 5
 	},
-	xPlayer: {
+	playerX: {
 		backgroundColor: '#f00',
 		borderColor: '#000',
 		// borderRadius: 50,
 		borderStyle: 'solid',
 		borderWidth: 1,
 		color: '#fff',
+		marginHorizontal: 10,
+		padding: 5
+	},
+	winnerDisplay: {
+		backgroundColor: '#0a0',
+		borderColor: '#000',
+		// borderRadius: 50,
+		borderStyle: 'solid',
+		borderWidth: 1,
+		color: '#ff0',
+		fontSize: 18,
 		marginHorizontal: 10,
 		padding: 5
 	}
