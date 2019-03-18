@@ -19,8 +19,8 @@ export default class App extends React.Component {
 	render() {
 		const { currentPlayer, gridRows } = this.state
 		const winner = this.checkForBoardWin()
-		const hasWinner = winner === ''
-		const winnerDisplay = hasWinner ? 'Board has no winner' : `Winner: ${winner}`
+		const hasWinner = winner !== ''
+		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
 		return (
 			<View style={styles.container}>
