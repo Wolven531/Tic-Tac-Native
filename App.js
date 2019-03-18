@@ -63,7 +63,18 @@ export default class App extends React.Component {
 		return ''
 	}
 
-	onGridUpdated = updatedGrid => this.setState({gridRows: updatedGrid})
+	nextPlayer = () => {
+		const { currentPlayer } = this.state
+		const result = currentPlayer === 'X' ? 'O' : 'X'
+		console.warn(`currentPlayer=${currentPlayer} nextPlayer=${result}`)
+		return result
+	}
+
+	onGridUpdated = updatedGrid => this.setState(
+		{
+			currentPlayer: this.nextPlayer(),
+			gridRows: updatedGrid
+		})
 }
 
 const styles = StyleSheet.create({
