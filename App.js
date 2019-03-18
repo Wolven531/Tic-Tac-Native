@@ -25,7 +25,10 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				<Text>Player: {currentPlayer}</Text>
+				<View style={styles.currentPlayer}>
+					<Text>Current Turn:</Text>
+					<Text style={currentPlayer === 'X' ? styles.xPlayer : styles.oPlayer}>{currentPlayer}</Text>
+				</View>
 				{hasWinner && <Text>{winnerDisplay}</Text>}
 				<Grid currentPlayer={currentPlayer} gridRows={gridRows}
 					onGridUpdated={this.onGridUpdated} />
@@ -63,12 +66,7 @@ export default class App extends React.Component {
 		return ''
 	}
 
-	nextPlayer = () => {
-		const { currentPlayer } = this.state
-		const result = currentPlayer === 'X' ? 'O' : 'X'
-		console.warn(`currentPlayer=${currentPlayer} nextPlayer=${result}`)
-		return result
-	}
+	nextPlayer = () => this.state.currentPlayer === 'X' ? 'O' : 'X'
 
 	onGridUpdated = updatedGrid => this.setState(
 		{
@@ -85,5 +83,31 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Arial',
 		justifyContent: 'center'
+	},
+	currentPlayer: {
+		alignItems: 'center',
+		color: '#000',
+		flexDirection: 'row',
+		padding: 5
+	},
+	oPlayer: {
+		backgroundColor: '#00f',
+		borderColor: '#000',
+		// borderRadius: 50,
+		borderStyle: 'solid',
+		borderWidth: 1,
+		color: '#fff',
+		marginHorizontal: 10,
+		padding: 5
+	},
+	xPlayer: {
+		backgroundColor: '#f00',
+		borderColor: '#000',
+		// borderRadius: 50,
+		borderStyle: 'solid',
+		borderWidth: 1,
+		color: '#fff',
+		marginHorizontal: 10,
+		padding: 5
 	}
 })
