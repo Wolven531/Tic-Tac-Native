@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Text, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
 import { Grid } from './Grid'
 
 export default class App extends React.Component {
-	NEW_BOARD = [
+	static NEW_BOARD = [
 		['','',''],
 		['','',''],
 		['','','']
@@ -14,13 +14,13 @@ export default class App extends React.Component {
 		super(props)
 		this.state = {
 			currentPlayer: 'X',
-			gridRows: this.NEW_BOARD
+			gridRows: App.NEW_BOARD
 		}
 	}
 
 	render() {
 		const { currentPlayer, gridRows } = this.state
-		const winner = this.checkForBoardWin()
+		const winner = this.checkBoardWin()
 		const hasWinner = winner !== ''
 		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
@@ -36,28 +36,27 @@ export default class App extends React.Component {
 					<Button
 						onPress={() => { this.startNewGame() }}
 						title="New Game"
-						color="#841584"
+						color="green"
 						accessibilityLabel="Start a new game of tic tac toe"
 					/>
 				</View>}
-				<Grid currentPlayer={currentPlayer} gridRows={gridRows}
-					onGridUpdated={this.onGridUpdated} />
+				<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
 			</View>
 		)
 	}
 
-	checkForBoardWin = () => {
+	checkBoardWin = () => {
 		const { gridRows } = this.state
 
 		const checks = [
-			this.checkForRowWin([ gridRows[0][0], gridRows[0][1], gridRows[0][2] ]),
-			this.checkForRowWin([ gridRows[1][0], gridRows[1][1], gridRows[1][2] ]),
-			this.checkForRowWin([ gridRows[2][0], gridRows[2][1], gridRows[2][2] ]),
-			this.checkForRowWin([ gridRows[0][0], gridRows[1][0], gridRows[2][0] ]),
-			this.checkForRowWin([ gridRows[0][1], gridRows[1][1], gridRows[2][1] ]),
-			this.checkForRowWin([ gridRows[0][2], gridRows[1][2], gridRows[2][2] ]),
-			this.checkForRowWin([ gridRows[0][0], gridRows[1][1], gridRows[2][2] ]),
-			this.checkForRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
+			this.checkRowWin([ gridRows[0][0], gridRows[0][1], gridRows[0][2] ]),
+			this.checkRowWin([ gridRows[1][0], gridRows[1][1], gridRows[1][2] ]),
+			this.checkRowWin([ gridRows[2][0], gridRows[2][1], gridRows[2][2] ]),
+			this.checkRowWin([ gridRows[0][0], gridRows[1][0], gridRows[2][0] ]),
+			this.checkRowWin([ gridRows[0][1], gridRows[1][1], gridRows[2][1] ]),
+			this.checkRowWin([ gridRows[0][2], gridRows[1][2], gridRows[2][2] ]),
+			this.checkRowWin([ gridRows[0][0], gridRows[1][1], gridRows[2][2] ]),
+			this.checkRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
 		]
 
 		const winner = checks.find(result => result !== '')
@@ -65,7 +64,7 @@ export default class App extends React.Component {
 		return winner || ''
 	}
 
-	checkForRowWin = row => {
+	checkRowWin = row => {
 		const leftCol = row[0]
 		const middleCol = row[1]
 		const rightCol = row[2]
@@ -78,17 +77,21 @@ export default class App extends React.Component {
 
 	nextPlayer = () => this.state.currentPlayer === 'X' ? 'O' : 'X'
 
-	onGridUpdated = updatedGrid => this.setState(
+	onGridUpdated = updatedGrid => {
+		this.setState(
 		{
 			currentPlayer: this.nextPlayer(),
 			gridRows: updatedGrid
 		})
+	}
 
-	startNewGame = () => this.setState(
+	startNewGame = () => {
+		this.setState(
 		{
 			currentPlayer: 'X',
-			gridRows: this.NEW_BOARD
+			gridRows: App.NEW_BOARD
 		})
+	}
 }
 
 const styles = StyleSheet.create({
