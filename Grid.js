@@ -39,7 +39,7 @@ class Grid extends React.Component {
 			return
 		}
 		if (updatedGrid[row][col] !== '') {
-			console.warn(`Cannot write; cell set previously: row=${row} col=${col} newVal="${newVal}" cellPrev="${updatedGrid[row][col]}"`)
+			// console.warn(`Cannot write; cell set previously: row=${row} col=${col} newVal="${newVal}" cellPrev="${updatedGrid[row][col]}"`)
 			return
 		}
 		updatedGrid[row][col] = newVal
