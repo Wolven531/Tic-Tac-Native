@@ -4,15 +4,17 @@ import { Button, Text, View } from 'react-native'
 import { Grid } from './Grid'
 
 export default class App extends React.Component {
+	NEW_BOARD = [
+		['','',''],
+		['','',''],
+		['','','']
+	]
+
 	constructor(props) {
 		super(props)
 		this.state = {
 			currentPlayer: 'X',
-			gridRows: [
-				['','',''],
-				['','',''],
-				['','','']
-			]
+			gridRows: this.NEW_BOARD
 		}
 	}
 
@@ -32,7 +34,7 @@ export default class App extends React.Component {
 				{hasWinner && <View style={styles.currentPlayer}>
 					<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
 					<Button
-						onPress={() => {}}
+						onPress={() => { this.startNewGame() }}
 						title="New Game"
 						color="#841584"
 						accessibilityLabel="Start a new game of tic tac toe"
@@ -80,6 +82,12 @@ export default class App extends React.Component {
 		{
 			currentPlayer: this.nextPlayer(),
 			gridRows: updatedGrid
+		})
+
+	startNewGame = () => this.setState(
+		{
+			currentPlayer: 'X',
+			gridRows: this.NEW_BOARD
 		})
 }
 
