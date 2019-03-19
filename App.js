@@ -1,5 +1,5 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Button, Text, View } from 'react-native'
 
 import { Grid } from './Grid'
 
@@ -31,6 +31,12 @@ export default class App extends React.Component {
 				</View>
 				{hasWinner && <View style={styles.currentPlayer}>
 					<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
+					<Button
+						onPress={() => {}}
+						title="New Game"
+						color="#841584"
+						accessibilityLabel="Start a new game of tic tac toe"
+					/>
 				</View>}
 				<Grid currentPlayer={currentPlayer} gridRows={gridRows}
 					onGridUpdated={this.onGridUpdated} />
