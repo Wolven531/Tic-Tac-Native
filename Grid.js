@@ -32,9 +32,14 @@ class Grid extends React.Component {
 	}
 
 	updateBoardCell = (row, col, newVal) => {
-		const updatedGrid = [...this.props.gridRows]
-		if (updatedGrid[row] === undefined ||
-			updatedGrid[row][col] === undefined) {
+		// NOTE: need to create new array, because otherwise
+		// inner arrays would retain reference during slice
+		const updatedGrid = [
+			[...this.props.gridRows[0]],
+			[...this.props.gridRows[1]],
+			[...this.props.gridRows[2]]
+		]
+		if (updatedGrid[row] === undefined || updatedGrid[row][col] === undefined) {
 			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
 			return
 		}
