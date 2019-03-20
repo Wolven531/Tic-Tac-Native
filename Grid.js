@@ -69,16 +69,9 @@ Grid.propTypes = {
 
 const styles = StyleSheet.create({
 	gridStyle: {
-		borderColor: '#000',
-		borderStyle: 'solid',
-		borderWidth: 1,
-		shadowColor: '#000',
-		shadowOffset: {
-			height: 5,
-			width: 5
-		},
-		shadowOpacity: 1,
-		shadowRadius: 3,
+		alignContent: 'stretch',
+		alignItems: 'stretch',
+		height: 300,
 		marginTop: 20,
 		// overflow: 'hidden',
 		width: '80%'
