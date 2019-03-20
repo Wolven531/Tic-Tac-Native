@@ -14,6 +14,7 @@ export default class App extends React.Component {
 		super(props)
 		this.state = {
 			currentPlayer: 'X',
+			gameEnded: false,
 			gridRows: App.NEW_BOARD
 		}
 	}
@@ -78,6 +79,13 @@ export default class App extends React.Component {
 	nextPlayer = () => this.state.currentPlayer === 'X' ? 'O' : 'X'
 
 	onGridUpdated = updatedGrid => {
+		if (this.state.gameEnded) {
+			return
+		}
+		if (this.checkBoardWin() !== '') {
+			this.setState({ gameEnded: true })
+			return
+		}
 		this.setState(
 		{
 			currentPlayer: this.nextPlayer(),
@@ -89,6 +97,7 @@ export default class App extends React.Component {
 		this.setState(
 		{
 			currentPlayer: 'X',
+			gameEnded: false,
 			gridRows: App.NEW_BOARD
 		})
 	}
