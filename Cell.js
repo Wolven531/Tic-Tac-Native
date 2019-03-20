@@ -42,17 +42,12 @@ Cell.propTypes = {
 
 const styles = StyleSheet.create({
 	cell: {
+		backgroundColor: 'rgba(100,100,100,.4)',
+		borderWidth: 1,
 		alignItems: 'center',
-		height: 75,
-		justifyContent: 'center',
-		shadowColor: '#000',
-		shadowOffset: {
-			height: 1,
-			width: 1
-		},
-		shadowOpacity: 1,
-		shadowRadius: 1,
-		width: '33.45%'
+		flexGrow: 1,
+		height: 100,
+		justifyContent: 'space-around'
 	},
 	cellText: {
 		color: '#fff',
