@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
+import { Cell } from './Cell'
 import { Grid } from './Grid'
 
 export default class App extends React.Component {
@@ -13,7 +14,7 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			currentPlayer: 'X',
+			currentPlayer: Cell.PlayerX,
 			gameEnded: false,
 			gridRows: App.NEW_BOARD
 		}
@@ -30,7 +31,7 @@ export default class App extends React.Component {
 				<Text>Tic Tac Toe</Text>
 				<View style={styles.currentPlayer}>
 					<Text>Current Turn:</Text>
-					<Text style={currentPlayer === 'X' ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
+					<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
 				</View>
 				{hasWinner && <View style={styles.currentPlayer}>
 					<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
@@ -76,7 +77,7 @@ export default class App extends React.Component {
 		return ''
 	}
 
-	nextPlayer = () => this.state.currentPlayer === 'X' ? 'O' : 'X'
+	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
 
 	onGridUpdated = updatedGrid => {
 		if (this.state.gameEnded) {
@@ -96,7 +97,7 @@ export default class App extends React.Component {
 	startNewGame = () => {
 		this.setState(
 		{
-			currentPlayer: 'X',
+			currentPlayer: Cell.PlayerX,
 			gameEnded: false,
 			gridRows: App.NEW_BOARD
 		})
