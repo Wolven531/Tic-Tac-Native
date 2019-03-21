@@ -3,12 +3,15 @@ import PropTypes from 'prop-types'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 class Cell extends React.Component {
+	static PlayerO = 'O'
+	static PlayerX = 'X'
+
 	render() {
 		const { display } = this.props
 		const cellStyles = [styles.cell]
-		if (display === 'X') {
+		if (display === Cell.PlayerX) {
 			cellStyles.push(styles.cellX)
-		} else if (display === 'O') {
+		} else if (display === Cell.PlayerO) {
 			cellStyles.push(styles.cellO)
 		}
 
@@ -22,12 +25,12 @@ class Cell extends React.Component {
 	onCellPress = () => {
 		switch (this.props.display) {
 			case '':
-				this.props.onCellPress('X')
+				this.props.onCellPress(Cell.PlayerX)
 				break
-			case 'X':
-				this.props.onCellPress('O')
+			case Cell.PlayerX:
+				this.props.onCellPress(Cell.PlayerO)
 				break
-			case 'O':
+			case Cell.PlayerO:
 			default:
 				this.props.onCellPress('')
 			break
