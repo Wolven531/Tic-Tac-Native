@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 class Cell extends React.Component {
 	static PlayerO = 'O'
 	static PlayerX = 'X'
+	static Blank = ''
 
 	render() {
 		const { display } = this.props
