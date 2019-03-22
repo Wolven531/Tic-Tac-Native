@@ -1,20 +1,20 @@
 import React from 'react'
-import { Button, Platform, StyleSheet, Text, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { Cell } from './Cell'
 import { Grid } from './Grid'
 
 export default class App extends React.Component {
 	static NEW_BOARD = [
-		['','',''],
-		['','',''],
-		['','','']
+		[Cell.Blank,Cell.Blank,Cell.Blank],
+		[Cell.Blank,Cell.Blank,Cell.Blank],
+		[Cell.Blank,Cell.Blank,Cell.Blank]
 	]
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			currentPlayer: Cell.PlayerX,
+			currentPlayer: Cell.Blank,
 			gameEnded: false,
 			gridRows: App.NEW_BOARD
 		}
@@ -23,26 +23,60 @@ export default class App extends React.Component {
 	render() {
 		const { currentPlayer, gridRows } = this.state
 		const winner = this.checkBoardWin()
-		const hasWinner = winner !== ''
+		const hasWinner = winner !== Cell.Blank
 		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				<View style={styles.currentPlayer}>
-					<Text>Current Turn:</Text>
-					<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
-				</View>
-				{hasWinner && <View style={styles.currentPlayer}>
-					<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
-					<Button
-						onPress={() => { this.startNewGame() }}
-						title="New Game"
-						color="green"
-						accessibilityLabel="Start a new game of tic tac toe"
-					/>
+				{currentPlayer === Cell.Blank && <View style={
+					{
+						flexDirection: 'column',
+						backgroundColor: 'rgba(255,255,255,.5)',
+						padding: 20
+					}}>
+					<Text style={{
+						// alignContent: 'center',
+						// alignContent: 'space-around',
+						// alignItems: 'center',
+						// alignItems: 'space-around',
+						// alignItems: 'stretch',
+						// backgroundColor: 'rgba(255,0,0,.5)',
+						// justifyContent: 'center',
+						// justifyContent: 'space-around',
+						// flex: .2,
+						// flexDirection: 'column',
+						marginVertical: 25
+					}}>Which player would you like to play?</Text>
+					<View style={{
+						flex: .2,
+						flexDirection: 'row',
+						justifyContent: 'space-evenly'
+					}}>
+						<TouchableOpacity>
+							<Text style={styles.playerX}>X</Text>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Text style={styles.playerO}>O</Text>
+						</TouchableOpacity>
+					</View>
 				</View>}
-				<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
+				{currentPlayer !== Cell.Blank && <View>
+					<View style={styles.currentPlayer}>
+						<Text>Current Turn:</Text>
+						<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
+					</View>
+					{hasWinner && <View style={styles.currentPlayer}>
+						<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
+						<Button
+							onPress={() => { this.startNewGame() }}
+							title="New Game"
+							color="green"
+							accessibilityLabel="Start a new game of tic tac toe"
+						/>
+					</View>}
+					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
+				</View>}
 			</View>
 		)
 	}
@@ -61,9 +95,9 @@ export default class App extends React.Component {
 			this.checkRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
 		]
 
-		const winner = checks.find(result => result !== '')
+		const winner = checks.find(result => result !== Cell.Blank)
 
-		return winner || ''
+		return winner || Cell.Blank
 	}
 
 	checkRowWin = row => {
@@ -71,10 +105,10 @@ export default class App extends React.Component {
 		const middleCol = row[1]
 		const rightCol = row[2]
 
-		if (leftCol !== '' && (leftCol === middleCol && middleCol === rightCol)) {
+		if (leftCol !== Cell.Blank && (leftCol === middleCol && middleCol === rightCol)) {
 			return leftCol
 		}
-		return ''
+		return Cell.Blank
 	}
 
 	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
@@ -83,7 +117,7 @@ export default class App extends React.Component {
 		if (this.state.gameEnded) {
 			return
 		}
-		if (this.checkBoardWin() !== '') {
+		if (this.checkBoardWin() !== Cell.Blank) {
 			this.setState({ gameEnded: true })
 			return
 		}
@@ -107,11 +141,12 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
-		backgroundColor: '#fff',
+		backgroundColor: '#aaa',
 		flex: 1,
 		flexDirection: 'column',
 		fontFamily: Platform.OS === 'android' ? 'Roboto' : 'Arial',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		paddingVertical: 50
 	},
 	currentPlayer: {
 		alignItems: 'center',
