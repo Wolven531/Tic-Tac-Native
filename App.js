@@ -35,29 +35,31 @@ export default class App extends React.Component {
 						backgroundColor: 'rgba(255,255,255,.5)',
 						padding: 20
 					}}>
-					<Text style={{
-						// alignContent: 'center',
-						// alignContent: 'space-around',
-						// alignItems: 'center',
-						// alignItems: 'space-around',
-						// alignItems: 'stretch',
-						// backgroundColor: 'rgba(255,0,0,.5)',
-						// justifyContent: 'center',
-						// justifyContent: 'space-around',
-						// flex: .2,
-						// flexDirection: 'column',
-						marginVertical: 25
-					}}>Which player would you like to play?</Text>
+					<Text style={{ marginBottom: 25 }}>Which player would you like to play?</Text>
 					<View style={{
-						flex: .2,
+						// backgroundColor: 'rgba(0,0,0,.2)',
 						flexDirection: 'row',
-						justifyContent: 'space-evenly'
+						justifyContent: 'space-evenly',
+						marginBottom: 20
 					}}>
 						<TouchableOpacity>
 							<Text style={styles.playerX}>X</Text>
 						</TouchableOpacity>
 						<TouchableOpacity>
 							<Text style={styles.playerO}>O</Text>
+						</TouchableOpacity>
+					</View>
+					<Text style={{ marginBottom: 25 }}>Which opponent?</Text>
+					<View style={{
+						// backgroundColor: 'rgba(0,0,0,.2)',
+						flexDirection: 'row',
+						justifyContent: 'space-evenly'
+					}}>
+						<TouchableOpacity>
+							<Text style={styles.playerX}>Human</Text>
+						</TouchableOpacity>
+						<TouchableOpacity>
+							<Text style={styles.playerO}>ArtI</Text>
 						</TouchableOpacity>
 					</View>
 				</View>}
