@@ -45,7 +45,7 @@ export default class App extends React.Component {
 							<Text style={[styles.playerO, currentPlayer === Cell.PlayerO ? styles.highlight : {}]}>O</Text>
 						</TouchableOpacity>
 					</View>
-					<Text style={{ marginBottom: 25 }}>Which opponent?</Text>
+					<Text style={{ marginBottom: 25 }}>Which adversary?</Text>
 					<View style={{
 						// backgroundColor: 'rgba(0,0,0,.2)',
 						flexDirection: 'row',
@@ -55,7 +55,7 @@ export default class App extends React.Component {
 							<Text style={styles.playerX}>Human</Text>
 						</TouchableOpacity>
 						<TouchableOpacity>
-							<Text style={styles.playerO}>ArtI</Text>
+							<Text style={styles.playerO}>Device</Text>
 						</TouchableOpacity>
 					</View>
 				</View>}
