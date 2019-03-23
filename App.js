@@ -10,6 +10,8 @@ export default class App extends React.Component {
 		[Cell.Blank,Cell.Blank,Cell.Blank],
 		[Cell.Blank,Cell.Blank,Cell.Blank]
 	]
+	static ADVERSARY = 'A'
+	static HUMAN = 'H'
 
 	constructor(props) {
 		super(props)
@@ -51,11 +53,11 @@ export default class App extends React.Component {
 						flexDirection: 'row',
 						justifyContent: 'space-evenly'
 					}}>
-						<TouchableOpacity>
-							<Text style={styles.playerX}>Human</Text>
+						<TouchableOpacity onPress={() => { this.setState({ currentAdversary: App.HUMAN }) }}>
+							<Text style={[styles.playerX, currentAdversary === App.HUMAN ? styles.highlight : {}]}>Human</Text>
 						</TouchableOpacity>
-						<TouchableOpacity>
-							<Text style={styles.playerO}>Device</Text>
+						<TouchableOpacity onPress={() => { this.setState({ currentAdversary: App.ADVERSARY }) }}>
+							<Text style={[styles.playerO, currentAdversary === App.ADVERSARY ? styles.highlight : {}]}>Device</Text>
 						</TouchableOpacity>
 					</View>
 				</View>}
@@ -165,8 +167,9 @@ const styles = StyleSheet.create({
 		width: '80%'
 	},
 	highlight: {
-		borderColor: '#0f0',
-		borderWidth: 3
+		backgroundColor: 'rgba(0,180,0,.5)',
+		borderColor: '#fff',
+		borderWidth: 1
 	},
 	playerO: {
 		backgroundColor: '#00f',
