@@ -14,6 +14,7 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+			currentAdversary: '',
 			currentPlayer: Cell.Blank,
 			gameEnded: false,
 			gridRows: App.NEW_BOARD
@@ -21,7 +22,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const { currentPlayer, gridRows } = this.state
+		const { currentAdversary, currentPlayer, gridRows } = this.state
 		const winner = this.checkBoardWin()
 		const hasWinner = winner !== Cell.Blank
 		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
@@ -29,7 +30,7 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				{currentPlayer === Cell.Blank && <View style={styles.configBox}>
+				{(currentPlayer === Cell.Blank || currentAdversary === '') && <View style={styles.configBox}>
 					<Text style={{ marginBottom: 25 }}>Which player would you like to play?</Text>
 					<View style={{
 						// backgroundColor: 'rgba(0,0,0,.2)',
@@ -38,10 +39,10 @@ export default class App extends React.Component {
 						marginBottom: 20
 					}}>
 						<TouchableOpacity onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }}>
-							<Text style={styles.playerX}>X</Text>
+							<Text style={[styles.playerX, currentPlayer === Cell.PlayerX ? styles.highlight : {}]}>X</Text>
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }}>
-							<Text style={styles.playerO}>O</Text>
+							<Text style={[styles.playerO, currentPlayer === Cell.PlayerO ? styles.highlight : {}]}>O</Text>
 						</TouchableOpacity>
 					</View>
 					<Text style={{ marginBottom: 25 }}>Which opponent?</Text>
@@ -58,7 +59,9 @@ export default class App extends React.Component {
 						</TouchableOpacity>
 					</View>
 				</View>}
-				{currentPlayer !== Cell.Blank && <View style={styles.gameBox}>
+				{currentPlayer !== Cell.Blank
+					&& currentAdversary !== ''
+					&& <View style={styles.gameBox}>
 					<View style={styles.currentPlayer}>
 						<Text>Current Turn:</Text>
 						<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
@@ -160,6 +163,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		flexDirection: 'column',
 		width: '80%'
+	},
+	highlight: {
+		borderColor: '#0f0',
+		borderWidth: 3
 	},
 	playerO: {
 		backgroundColor: '#00f',
