@@ -4,6 +4,8 @@ import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import { Cell } from './Cell'
 import { Grid } from './Grid'
 
+import { PlayerSelectionButton } from './PlayerSelectionButton'
+
 export default class App extends React.Component {
 	static NEW_BOARD = [
 		[Cell.Blank,Cell.Blank,Cell.Blank],
@@ -40,12 +42,8 @@ export default class App extends React.Component {
 						justifyContent: 'space-evenly',
 						marginBottom: 20
 					}}>
-						<TouchableOpacity onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }}>
-							<Text style={[styles.playerX, currentPlayer === Cell.PlayerX ? styles.highlight : {}]}>X</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }}>
-							<Text style={[styles.playerO, currentPlayer === Cell.PlayerO ? styles.highlight : {}]}>O</Text>
-						</TouchableOpacity>
+						<PlayerSelectionButton display={Cell.PlayerX} isHighlighted={currentPlayer === Cell.PlayerX} onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }} />
+						<PlayerSelectionButton display={Cell.PlayerO} isHighlighted={currentPlayer === Cell.PlayerO} onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }} />
 					</View>
 					<Text style={{ marginBottom: 25 }}>Which adversary?</Text>
 					<View style={{
