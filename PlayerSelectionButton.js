@@ -3,20 +3,26 @@
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import {
-	string as PropString,
 	bool as PropBool,
-	func as PropFunc
- } from 'prop-types'
+	func as PropFunc,
+	string as PropString
+} from 'prop-types'
+
+import { PlayerXDisplay } from './Cell'
 
 class PlayerSelectionButton extends React.Component {
 	render() {
-		const { display, isSelected, onPress } = this.props
+		const { display, isHighlighted, onPress } = this.props
 
 		return (
 			<TouchableOpacity onPress={onPress}>
-				<Text style={[
-					display === Cell.PlayerX ? styles.playerX : styles.playerO,
-					isSelected ? styles.highlight : {}]}>
+				<Text
+					style={[
+						display === PlayerXDisplay
+							? styles.playerX
+							: styles.playerO,
+						isHighlighted ? styles.highlight : {}
+					]}>
 					{display}
 				</Text>
 			</TouchableOpacity>
@@ -26,7 +32,7 @@ class PlayerSelectionButton extends React.Component {
 
 PlayerSelectionButton.propTypes = {
 	display: PropString.isRequired,
-	isSelected: PropBool.isRequired,
+	isHighlighted: PropBool.isRequired,
 	onPress: PropFunc.isRequired
 }
 
