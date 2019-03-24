@@ -13,6 +13,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.7.0",
     "babel-preset-expo": "^5.0.0"
   },
   "private": true
