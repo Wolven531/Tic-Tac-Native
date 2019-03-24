@@ -70,4 +70,11 @@ const styles = StyleSheet.create({
 	}
 })
 
-export { Cell }
+const PlayerODisplay = Cell.PlayerO
+const PlayerXDisplay = Cell.PlayerX
+
+export {
+	Cell,
+	PlayerODisplay,
+	PlayerXDisplay
+}
