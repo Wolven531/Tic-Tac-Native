@@ -4,7 +4,7 @@ import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import { Cell } from './Cell'
 import { Grid } from './Grid'
 
-import { PlayerSelectionButton } from './PlayerSelectionButton'
+import { SelectionButton } from './SelectionButton'
 
 export default class App extends React.Component {
 	static NEW_BOARD = [
@@ -36,27 +36,26 @@ export default class App extends React.Component {
 				<Text>Tic Tac Toe</Text>
 				{(currentPlayer === Cell.Blank || currentAdversary === '') && <View style={styles.configBox}>
 					<Text style={{ marginBottom: 25 }}>Which player would you like to play?</Text>
-					<View style={{
-						// backgroundColor: 'rgba(0,0,0,.2)',
-						flexDirection: 'row',
-						justifyContent: 'space-evenly',
-						marginBottom: 20
-					}}>
-						<PlayerSelectionButton display={Cell.PlayerX} isHighlighted={currentPlayer === Cell.PlayerX} onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }} />
-						<PlayerSelectionButton display={Cell.PlayerO} isHighlighted={currentPlayer === Cell.PlayerO} onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }} />
+					<View style={[styles.selectionContainer, { marginBottom: 20 }]}>
+						<SelectionButton display={Cell.PlayerX}
+							isHighlighted={currentPlayer === Cell.PlayerX}
+							onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }}
+							textStyle={styles.playerX} />
+						<SelectionButton display={Cell.PlayerO}
+							isHighlighted={currentPlayer === Cell.PlayerO}
+							onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }}
+							textStyle={styles.playerO} />
 					</View>
 					<Text style={{ marginBottom: 25 }}>Which adversary?</Text>
-					<View style={{
-						// backgroundColor: 'rgba(0,0,0,.2)',
-						flexDirection: 'row',
-						justifyContent: 'space-evenly'
-					}}>
-						<TouchableOpacity onPress={() => { this.setState({ currentAdversary: App.HUMAN }) }}>
-							<Text style={[styles.playerX, currentAdversary === App.HUMAN ? styles.highlight : {}]}>Human</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => { this.setState({ currentAdversary: App.ADVERSARY }) }}>
-							<Text style={[styles.playerO, currentAdversary === App.ADVERSARY ? styles.highlight : {}]}>Device</Text>
-						</TouchableOpacity>
+					<View style={styles.selectionContainer}>
+						<SelectionButton display={'Human'}
+							isHighlighted={currentAdversary === App.HUMAN}
+							onPress={() => { this.setState({ currentAdversary: App.HUMAN }) }}
+							textStyle={styles.playerX} />
+						<SelectionButton display={'Device'}
+							isHighlighted={currentAdversary === App.ADVERSARY}
+							onPress={() => { this.setState({ currentAdversary: App.ADVERSARY }) }}
+							textStyle={styles.playerO} />
 					</View>
 				</View>}
 				{currentPlayer !== Cell.Blank
@@ -67,11 +66,11 @@ export default class App extends React.Component {
 						<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
 					</View>
 					{hasWinner && <View style={styles.currentPlayer}>
-						<Text style={styles.winnerDisplay}>{winnerDisplay}</Text>
+						<Text style={[winner === Cell.PlayerX ? styles.playerX : styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>
 						<Button
 							onPress={() => { this.startNewGame() }}
 							title="New Game"
-							color="green"
+							color="gold"
 							accessibilityLabel="Start a new game of tic tac toe"
 						/>
 					</View>}
@@ -189,15 +188,11 @@ const styles = StyleSheet.create({
 		marginHorizontal: 10,
 		padding: 5
 	},
+	selectionContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-evenly'
+	},
 	winnerDisplay: {
-		backgroundColor: '#0a0',
-		borderColor: '#000',
-		// borderRadius: 50,
-		borderStyle: 'solid',
-		borderWidth: 1,
-		color: '#ff0',
-		fontSize: 18,
-		marginHorizontal: 10,
-		padding: 5
+		fontSize: 18
 	}
 })
