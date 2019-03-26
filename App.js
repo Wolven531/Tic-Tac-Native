@@ -110,6 +110,21 @@ export default class App extends React.Component {
 		return Cell.Blank
 	}
 
+	getRandomEmptyCell = grid => {
+		let rowsWithEmptyCells = []
+		for (let a = 0; a < 3; a++) {
+			const row = grid[a]
+			if (row.filter(cell => cell === Cell.Blank).length > 0) {
+				rowsWithEmptyCells.push(a)
+			}
+		}
+
+		const maxIndex = rowsWithEmptyCells.length - 1
+		const randomRow = Math.round(Math.random() * maxIndex)
+		const selectedRow = rowsWithEmptyCells[randomRow]
+		
+	}
+
 	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
 
 	onGridUpdated = updatedGrid => {
