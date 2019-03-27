@@ -35,8 +35,8 @@ export default class App extends React.Component {
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
 				{(currentPlayer === Cell.Blank || currentAdversary === '') && <View style={styles.configBox}>
-					<Text style={{ marginBottom: 25 }}>Which player would you like to play?</Text>
-					<View style={[styles.selectionContainer, { marginBottom: 20 }]}>
+					<Text style={styles.spacerBottom}>Which player would you like to play?</Text>
+					<View style={[styles.selectionContainer, styles.spacerBottom]}>
 						<SelectionButton display={Cell.PlayerX}
 							isHighlighted={currentPlayer === Cell.PlayerX}
 							onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }}
@@ -46,7 +46,7 @@ export default class App extends React.Component {
 							onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }}
 							textStyle={styles.playerO} />
 					</View>
-					<Text style={{ marginBottom: 25 }}>Which adversary?</Text>
+					<Text style={styles.spacerBottom}>Which adversary?</Text>
 					<View style={styles.selectionContainer}>
 						<SelectionButton display={'Human'}
 							isHighlighted={currentAdversary === App.HUMAN}
@@ -75,7 +75,7 @@ export default class App extends React.Component {
 						/>
 					</View>}
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
-					{!hasWinner && <View style={{ marginTop: 25 }}>
+					{!hasWinner && <View style={styles.spacerTop}>
 						<Button title="Fill Random Cell" color="#00f" onPress={() => { this.fillRandomCell(gridRows) }} />
 					</View>}
 				</View>}
@@ -241,6 +241,12 @@ const styles = StyleSheet.create({
 	selectionContainer: {
 		flexDirection: 'row',
 		justifyContent: 'space-evenly'
+	},
+	spacerBottom: {
+		marginBottom: 25
+	},
+	spacerTop: {
+		marginTop: 25
 	},
 	winnerDisplay: {
 		fontSize: 18
