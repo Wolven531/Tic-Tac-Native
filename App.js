@@ -75,6 +75,9 @@ export default class App extends React.Component {
 						/>
 					</View>}
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
+					<View style={{ marginTop: 25 }}>
+						<Button title="Get Random Cell" onPress={() => { this.displayRandomCell(gridRows) }} />
+					</View>
 				</View>}
 			</View>
 		)
@@ -110,8 +113,34 @@ export default class App extends React.Component {
 		return Cell.Blank
 	}
 
+	displayRandomCell = (grid) => {
+		alert(JSON.stringify(this.getRandomEmptyCell(grid), null, 4))
+	}
+
 	getRandomEmptyCell = grid => {
-		let rowsWithEmptyCells = []
+		const emptyCellIndexes = []
+		const randomRowIndex = this.getRandomEmptyRowIndex(grid)
+		const row = grid[randomRowIndex]
+
+		for (let a = 0; a < 3; a++) {
+			if (row[a] === Cell.Blank) {
+				emptyCellIndexes.push(a)
+			}
+		}
+
+		const maxIndex = emptyCellIndexes.length - 1
+		const randomIndex = Math.round(Math.random() * maxIndex)
+		const cell = emptyCellIndexes[randomIndex]
+
+		return {
+			cell,
+			row: randomRowIndex
+		}
+	}
+
+	getRandomEmptyRowIndex = grid => {
+		const rowsWithEmptyCells = []
+
 		for (let a = 0; a < 3; a++) {
 			const row = grid[a]
 			if (row.filter(cell => cell === Cell.Blank).length > 0) {
@@ -120,9 +149,9 @@ export default class App extends React.Component {
 		}
 
 		const maxIndex = rowsWithEmptyCells.length - 1
-		const randomRow = Math.round(Math.random() * maxIndex)
-		const selectedRow = rowsWithEmptyCells[randomRow]
-		
+		const randomIndex = Math.round(Math.random() * maxIndex)
+
+		return rowsWithEmptyCells[randomIndex]
 	}
 
 	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
