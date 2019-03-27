@@ -75,9 +75,9 @@ export default class App extends React.Component {
 						/>
 					</View>}
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
-					<View style={{ marginTop: 25 }}>
-						<Button title="Get Random Cell" onPress={() => { this.displayRandomCell(gridRows) }} />
-					</View>
+					{!hasWinner && <View style={{ marginTop: 25 }}>
+						<Button title="Fill Random Cell" color="#00f" onPress={() => { this.fillRandomCell(gridRows) }} />
+					</View>}
 				</View>}
 			</View>
 		)
@@ -113,8 +113,15 @@ export default class App extends React.Component {
 		return Cell.Blank
 	}
 
-	displayRandomCell = grid => {
-		alert(JSON.stringify(this.getRandomEmptyCell(grid), null, 4))
+	fillRandomCell = grid => {
+		const updatedGrid = [
+			[...grid[0]],
+			[...grid[1]],
+			[...grid[2]]
+		]
+		const { randomCellIndex, randomRowIndex } = this.getRandomEmptyCell(grid)
+		updatedGrid[randomRowIndex][randomCellIndex] = this.state.currentPlayer
+		this.onGridUpdated(updatedGrid)
 	}
 
 	getRandomArrayIndex = arr => {
