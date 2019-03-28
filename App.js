@@ -102,6 +102,8 @@ export default class App extends React.Component {
 		return winner || Cell.Blank
 	}
 
+	checkEndGame = () => !this.state.gridRows.some(row => row.some(cell => cell === Cell.Blank))
+
 	checkRowWin = row => {
 		const leftCol = row[0]
 		const middleCol = row[1]
@@ -114,6 +116,10 @@ export default class App extends React.Component {
 	}
 
 	fillRandomCell = grid => {
+		if (this.checkEndGame()) {
+			return
+		}
+
 		const updatedGrid = [
 			[...grid[0]],
 			[...grid[1]],
@@ -167,6 +173,10 @@ export default class App extends React.Component {
 			return
 		}
 		if (this.checkBoardWin() !== Cell.Blank) {
+			this.setState({ gameEnded: true })
+			return
+		}
+		if (this.checkEndGame()) {
 			this.setState({ gameEnded: true })
 			return
 		}
