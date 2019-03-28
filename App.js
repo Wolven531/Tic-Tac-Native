@@ -28,6 +28,7 @@ export default class App extends React.Component {
 	render() {
 		const { currentAdversary, currentPlayer, gridRows } = this.state
 		const winner = this.checkBoardWin()
+		const isGameOver = this.checkEndGame()
 		const hasWinner = winner !== Cell.Blank
 		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
@@ -65,8 +66,8 @@ export default class App extends React.Component {
 						<Text>Current Turn:</Text>
 						<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
 					</View>
-					{hasWinner && <View style={styles.currentPlayer}>
-						<Text style={[winner === Cell.PlayerX ? styles.playerX : styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>
+					{(hasWinner || isGameOver) && <View style={styles.currentPlayer}>
+						{hasWinner && <Text style={[winner === Cell.PlayerX ? styles.playerX : styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>}
 						<Button
 							onPress={() => { this.startNewGame() }}
 							title="New Game"
@@ -75,7 +76,7 @@ export default class App extends React.Component {
 						/>
 					</View>}
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
-					{!hasWinner && <View style={styles.spacerTop}>
+					{!hasWinner && !isGameOver && <View style={styles.spacerTop}>
 						<Button title="Fill Random Cell" color="#00f" onPress={() => { this.fillRandomCell(gridRows) }} />
 					</View>}
 				</View>}
