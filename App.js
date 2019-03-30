@@ -7,19 +7,13 @@ import { Grid } from './Grid'
 import { GameConfigurationScreen } from './GameConfigurationScreen'
 
 export default class App extends React.Component {
-	static NEW_BOARD = [
-		[Cell.Blank,Cell.Blank,Cell.Blank],
-		[Cell.Blank,Cell.Blank,Cell.Blank],
-		[Cell.Blank,Cell.Blank,Cell.Blank]
-	]
-
 	constructor(props) {
 		super(props)
 		this.state = {
 			currentAdversary: '',
 			currentPlayer: Cell.Blank,
 			gameEnded: false,
-			gridRows: App.NEW_BOARD
+			gridRows: this.getNewBoard()
 		}
 	}
 
@@ -106,6 +100,12 @@ export default class App extends React.Component {
 		this.onGridUpdated(updatedGrid)
 	}
 
+	getNewBoard = () => [
+		[Cell.Blank,Cell.Blank,Cell.Blank],
+		[Cell.Blank,Cell.Blank,Cell.Blank],
+		[Cell.Blank,Cell.Blank,Cell.Blank]
+	]
+
 	getRandomArrayIndex = arr => {
 		const maxIndex = arr.length - 1
 		return Math.round(Math.random() * maxIndex)
@@ -169,7 +169,7 @@ export default class App extends React.Component {
 			currentAdversary,
 			currentPlayer,
 			gameEnded: false,
-			gridRows: App.NEW_BOARD
+			gridRows: this.getNewBoard()
 		})
 	}
 }
