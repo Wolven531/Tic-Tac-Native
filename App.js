@@ -1,10 +1,10 @@
 import React from 'react'
-import { Button, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
 import { Cell } from './Cell'
-import { Grid } from './Grid'
-
 import { GameConfigurationScreen } from './GameConfigurationScreen'
+import { GameStatusScreen } from './GameStatusScreen'
+import { Grid } from './Grid'
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -19,31 +19,21 @@ export default class App extends React.Component {
 
 	render() {
 		const { currentAdversary, currentPlayer, gridRows } = this.state
-		const winner = this.checkBoardWin()
 		const isGameOver = this.checkEndGame()
+		const winner = this.checkBoardWin()
 		const hasWinner = winner !== Cell.Blank
-		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
 				{(currentPlayer === Cell.Blank || currentAdversary === '') && <GameConfigurationScreen startNewGame={this.startNewGame} />}
-				{currentPlayer !== Cell.Blank
-					&& currentAdversary !== ''
-					&& <View style={styles.gameBox}>
-					<View style={styles.currentPlayer}>
-						<Text>Current Turn:</Text>
-						<Text style={currentPlayer === Cell.PlayerX ? styles.playerX : styles.playerO}>{currentPlayer}</Text>
-					</View>
-					{(hasWinner || isGameOver) && <View style={styles.currentPlayer}>
-						{hasWinner && <Text style={[winner === Cell.PlayerX ? styles.playerX : styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>}
-						<Button
-							onPress={() => { this.startNewGame(currentPlayer, currentAdversary) }}
-							title="New Game"
-							color="gold"
-							accessibilityLabel="Start a new game of tic tac toe"
-						/>
-					</View>}
+				{currentPlayer !== Cell.Blank && currentAdversary !== '' && <View style={styles.gameBox}>
+					<GameStatusScreen
+						currentAdversary={currentAdversary}
+						currentPlayer={currentPlayer}
+						isGameOver={isGameOver}
+						startNewGame={this.startNewGame}
+						winner={winner} />
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
 					{!hasWinner && !isGameOver && <View style={styles.spacerTop}>
 						<Button title="Fill Random Cell" color="#00f" onPress={() => { this.fillRandomCell(gridRows) }} />
@@ -195,30 +185,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		width: '80%'
 	},
-	playerO: {
-		backgroundColor: '#00f',
-		borderColor: '#000',
-		// borderRadius: 50,
-		borderStyle: 'solid',
-		borderWidth: 1,
-		color: '#fff',
-		marginHorizontal: 10,
-		padding: 5
-	},
-	playerX: {
-		backgroundColor: '#f00',
-		borderColor: '#000',
-		// borderRadius: 50,
-		borderStyle: 'solid',
-		borderWidth: 1,
-		color: '#fff',
-		marginHorizontal: 10,
-		padding: 5
-	},
 	spacerTop: {
 		marginTop: 25
-	},
-	winnerDisplay: {
-		fontSize: 18
 	}
 })
