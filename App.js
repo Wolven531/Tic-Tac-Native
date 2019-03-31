@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
 import { Cell } from './Cell'
-import { GameConfigurationScreen } from './GameConfigurationScreen'
+import { Adversary, GameConfigurationScreen } from './GameConfigurationScreen'
 import { GameStatusScreen } from './GameStatusScreen'
 import { Grid } from './Grid'
 
@@ -19,9 +19,6 @@ export default class App extends React.Component {
 
 	render() {
 		const { currentAdversary, currentPlayer, gridRows } = this.state
-		const isGameOver = this.checkEndGame()
-		const winner = this.checkBoardWin()
-		const hasWinner = winner !== Cell.Blank
 
 		return (
 			<View style={styles.container}>
@@ -31,13 +28,10 @@ export default class App extends React.Component {
 					<GameStatusScreen
 						currentAdversary={currentAdversary}
 						currentPlayer={currentPlayer}
-						isGameOver={isGameOver}
+						isGameOver={this.checkEndGame(gridRows)}
 						startNewGame={this.startNewGame}
-						winner={winner} />
+						winner={this.checkBoardWin()} />
 					<Grid currentPlayer={currentPlayer} gridRows={gridRows} onGridUpdated={this.onGridUpdated} />
-					{!hasWinner && !isGameOver && <View style={styles.spacerTop}>
-						<Button title="Fill Random Cell" color="#00f" onPress={() => { this.fillRandomCell(gridRows) }} />
-					</View>}
 				</View>}
 			</View>
 		)
@@ -62,7 +56,7 @@ export default class App extends React.Component {
 		return winner || Cell.Blank
 	}
 
-	checkEndGame = () => !this.state.gridRows.some(row => row.some(cell => cell === Cell.Blank))
+	checkEndGame = gridRows => !gridRows.some(row => row.some(cell => cell === Cell.Blank))
 
 	checkRowWin = row => {
 		const leftCol = row[0]
@@ -76,7 +70,7 @@ export default class App extends React.Component {
 	}
 
 	fillRandomCell = grid => {
-		if (this.checkEndGame()) {
+		if (this.checkEndGame(grid)) {
 			return
 		}
 
@@ -134,22 +128,25 @@ export default class App extends React.Component {
 
 	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
 
-	onGridUpdated = updatedGrid => {
+	onGridUpdated = gridRows => {
 		if (this.state.gameEnded) {
 			return
 		}
-		if (this.checkBoardWin() !== Cell.Blank) {
-			this.setState({ gameEnded: true })
-			return
+		let gameEnded = false
+		if (this.checkBoardWin() !== Cell.Blank || this.checkEndGame(gridRows)) {
+			gameEnded = true
 		}
-		if (this.checkEndGame()) {
-			this.setState({ gameEnded: true })
+		if (!gameEnded && this.state.currentAdversary === Adversary) {
+			const { randomCellIndex, randomRowIndex } = this.getRandomEmptyCell(gridRows)
+			gridRows[randomRowIndex][randomCellIndex] = this.nextPlayer()
+			this.setState({ gridRows })
 			return
 		}
 		this.setState(
 		{
 			currentPlayer: this.nextPlayer(),
-			gridRows: updatedGrid
+			gameEnded,
+			gridRows
 		})
 	}
 
@@ -174,18 +171,9 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 50
 	},
-	currentPlayer: {
-		alignItems: 'center',
-		color: '#000',
-		flexDirection: 'row',
-		padding: 5
-	},
 	gameBox: {
 		alignItems: 'center',
 		flexDirection: 'column',
 		width: '80%'
-	},
-	spacerTop: {
-		marginTop: 25
 	}
 })
