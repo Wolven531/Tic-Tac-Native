@@ -102,4 +102,11 @@ const styles = StyleSheet.create({
 	}
 })
 
-export { GameConfigurationScreen }
+const Adversary = GameConfigurationScreen.ADVERSARY
+const Human = GameConfigurationScreen.HUMAN
+
+export { 
+	Adversary,
+	GameConfigurationScreen,
+	Human
+}
