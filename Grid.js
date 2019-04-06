@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { BlankDisplay } from './Cell'
+import { BlankDisplay, Cell } from './Cell'
 
 class Grid extends React.Component {
 	render() {
