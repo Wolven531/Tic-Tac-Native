@@ -144,7 +144,7 @@ export default class App extends React.Component {
 		}
 		this.setState(
 		{
-			currentPlayer: this.nextPlayer(),
+			currentPlayer: gameEnded ? this.state.currentPlayer : this.nextPlayer(),
 			gameEnded,
 			gridRows
 		})
