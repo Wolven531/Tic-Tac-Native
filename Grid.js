@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { Cell } from './Cell'
+import { BlankDisplay } from './Cell'
 
 class Grid extends React.Component {
 	render() {
@@ -39,11 +39,14 @@ class Grid extends React.Component {
 			[...this.props.gridRows[1]],
 			[...this.props.gridRows[2]]
 		]
-		if (updatedGrid[row] === undefined || updatedGrid[row][col] === undefined) {
+		if (
+			updatedGrid[row] === undefined ||
+			updatedGrid[row][col] === undefined
+		) {
 			console.warn(`Invalid cell supplied: row=${row} col=${col} newVal="${newVal}"`)
 			return
 		}
-		if (updatedGrid[row][col] !== Cell.Blank) {
+		if (updatedGrid[row][col] !== BlankDisplay) {
 			// console.warn(`Cannot write; cell set previously: row=${row} col=${col} newVal="${newVal}" cellPrev="${updatedGrid[row][col]}"`)
 			return
 		}

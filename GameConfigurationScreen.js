@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { Cell } from './Cell'
-
+import { BlankDisplay, PlayerODisplay, PlayerXDisplay } from './Cell'
 import { SelectionButton } from './SelectionButton'
 
 class GameConfigurationScreen extends Component {
@@ -14,7 +13,7 @@ class GameConfigurationScreen extends Component {
 		super(props)
 		this.state = {
 			currentAdversary: props.adversary || GameConfigurationScreen.HUMAN,
-			currentPlayer: props.player || Cell.Blank
+			currentPlayer: props.player || BlankDisplay
 		}
 	}
 
@@ -23,42 +22,55 @@ class GameConfigurationScreen extends Component {
 
 		return (
 			<View style={styles.configBox}>
-				<Text style={styles.spacerBottom}>Which player would you like to play?</Text>
+				<Text style={styles.spacerBottom}>
+					Which player would you like to play?
+				</Text>
 				<View style={[styles.selectionContainer, styles.spacerBottom]}>
-					<SelectionButton display={Cell.PlayerX}
-						isHighlighted={currentPlayer === Cell.PlayerX}
-						onPress={() => { this.setState({ currentPlayer: Cell.PlayerX }) }}
-						textStyle={styles.playerX} />
-					<SelectionButton display={Cell.PlayerO}
-						isHighlighted={currentPlayer === Cell.PlayerO}
-						onPress={() => { this.setState({ currentPlayer: Cell.PlayerO }) }}
-						textStyle={styles.playerO} />
+					<SelectionButton
+						display={PlayerXDisplay}
+						isHighlighted={currentPlayer === PlayerXDisplay}
+						onPress={() => { this.setState({ currentPlayer: PlayerXDisplay }) }}
+						textStyle={styles.playerX}
+					/>
+					<SelectionButton
+						display={PlayerODisplay}
+						isHighlighted={currentPlayer === PlayerODisplay}
+						onPress={() => { this.setState({ currentPlayer: PlayerODisplay }) }}
+						textStyle={styles.playerO}
+					/>
 				</View>
 				<Text style={styles.spacerBottom}>Which adversary?</Text>
 				<View style={styles.selectionContainer}>
 					<SelectionButton display={'Human'}
 						isHighlighted={currentAdversary === GameConfigurationScreen.HUMAN}
 						onPress={() => { this.setState({ currentAdversary: GameConfigurationScreen.HUMAN }) }}
-						textStyle={styles.playerX} />
+						textStyle={styles.playerX}
+					/>
 					<SelectionButton display={'Device'}
 						isHighlighted={currentAdversary === GameConfigurationScreen.ADVERSARY}
 						onPress={() => { this.setState({ currentAdversary: GameConfigurationScreen.ADVERSARY }) }}
-						textStyle={styles.playerO} />
+						textStyle={styles.playerO}
+					/>
 				</View>
-				{currentPlayer !== Cell.Blank && <View>
-					<Button
+				{currentPlayer !== BlankDisplay && (
+					<View>
+						<Button
 							onPress={() => { this.startNewGame() }}
 							title="Start Game"
 							color="green"
 							accessibilityLabel="Start a new game of tic tac toe"
 						/>
-				</View>}
+					</View>
+				)}
 			</View>
 		)
 	}
 
 	startNewGame = () => {
-		this.props.startNewGame(this.state.currentPlayer, this.state.currentAdversary)
+		this.props.startNewGame(
+			this.state.currentPlayer,
+			this.state.currentAdversary
+		)
 	}
 }
 
@@ -105,8 +117,4 @@ const styles = StyleSheet.create({
 const Adversary = GameConfigurationScreen.ADVERSARY
 const Human = GameConfigurationScreen.HUMAN
 
-export { 
-	Adversary,
-	GameConfigurationScreen,
-	Human
-}
+export { Adversary, GameConfigurationScreen, Human }

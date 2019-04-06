@@ -2,24 +2,24 @@ import React, { Component } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { Cell } from './Cell'
+import { BlankDisplay, PlayerXDisplay } from './Cell'
 
 class GameStatusScreen extends Component {
 	render() {
 		const { isGameOver, currentAdversary, currentPlayer, winner } = this.props
-		const hasWinner = winner !== Cell.Blank
+		const hasWinner = winner !== BlankDisplay
 		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
 
 		return (
 			<View style={styles.gameBox}>
 				<View style={styles.currentPlayer}>
 					<Text>Current Turn:</Text>
-					<Text style={currentPlayer === Cell.PlayerX
+					<Text style={currentPlayer === PlayerXDisplay
 						? styles.playerX
 						: styles.playerO}>{currentPlayer}</Text>
 				</View>
 				{(hasWinner || isGameOver) && <View style={styles.currentPlayer}>
-					{hasWinner && <Text style={[winner === Cell.PlayerX
+					{hasWinner && <Text style={[winner === PlayerXDisplay
 						? styles.playerX
 						: styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>}
 					<Button

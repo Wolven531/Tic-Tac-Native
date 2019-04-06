@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Platform, StyleSheet, Text, View } from 'react-native'
 
-import { Cell } from './Cell'
+import { BlankDisplay, PlayerODisplay, PlayerXDisplay } from './Cell'
 import { Adversary, GameConfigurationScreen } from './GameConfigurationScreen'
 import { GameStatusScreen } from './GameStatusScreen'
 import { Grid } from './Grid'
@@ -11,7 +11,7 @@ export default class App extends React.Component {
 		super(props)
 		this.state = {
 			currentAdversary: '',
-			currentPlayer: Cell.Blank,
+			currentPlayer: BlankDisplay,
 			gameEnded: false,
 			gridRows: this.getNewBoard()
 		}
@@ -23,8 +23,8 @@ export default class App extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text>Tic Tac Toe</Text>
-				{(currentPlayer === Cell.Blank || currentAdversary === '') && <GameConfigurationScreen startNewGame={this.startNewGame} />}
-				{currentPlayer !== Cell.Blank && currentAdversary !== '' && <View style={styles.gameBox}>
+				{(currentPlayer === BlankDisplay || currentAdversary === '') && <GameConfigurationScreen startNewGame={this.startNewGame} />}
+				{currentPlayer !== BlankDisplay && currentAdversary !== '' && <View style={styles.gameBox}>
 					<GameStatusScreen
 						currentAdversary={currentAdversary}
 						currentPlayer={currentPlayer}
@@ -51,22 +51,22 @@ export default class App extends React.Component {
 			this.checkRowWin([ gridRows[2][0], gridRows[1][1], gridRows[0][2] ])
 		]
 
-		const winner = checks.find(result => result !== Cell.Blank)
+		const winner = checks.find(result => result !== BlankDisplay)
 
-		return winner || Cell.Blank
+		return winner || BlankDisplay
 	}
 
-	checkEndGame = gridRows => !gridRows.some(row => row.some(cell => cell === Cell.Blank))
+	checkEndGame = gridRows => !gridRows.some(row => row.some(cell => cell === BlankDisplay))
 
 	checkRowWin = row => {
 		const leftCol = row[0]
 		const middleCol = row[1]
 		const rightCol = row[2]
 
-		if (leftCol !== Cell.Blank && (leftCol === middleCol && middleCol === rightCol)) {
+		if (leftCol !== BlankDisplay && (leftCol === middleCol && middleCol === rightCol)) {
 			return leftCol
 		}
-		return Cell.Blank
+		return BlankDisplay
 	}
 
 	fillRandomCell = grid => {
@@ -85,9 +85,9 @@ export default class App extends React.Component {
 	}
 
 	getNewBoard = () => [
-		[Cell.Blank,Cell.Blank,Cell.Blank],
-		[Cell.Blank,Cell.Blank,Cell.Blank],
-		[Cell.Blank,Cell.Blank,Cell.Blank]
+		[BlankDisplay,BlankDisplay,BlankDisplay],
+		[BlankDisplay,BlankDisplay,BlankDisplay],
+		[BlankDisplay,BlankDisplay,BlankDisplay]
 	]
 
 	getRandomArrayIndex = arr => {
@@ -101,7 +101,7 @@ export default class App extends React.Component {
 		const row = grid[randomRowIndex]
 
 		for (let cellIndex = 0; cellIndex < 3; cellIndex++) {
-			if (row[cellIndex] === Cell.Blank) {
+			if (row[cellIndex] === BlankDisplay) {
 				emptyCellIndexes.push(cellIndex)
 			}
 		}
@@ -118,7 +118,7 @@ export default class App extends React.Component {
 		const rowIndexesWithEmptyCells = []
 
 		for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
-			if (grid[rowIndex].some(cell => cell === Cell.Blank)) {
+			if (grid[rowIndex].some(cell => cell === BlankDisplay)) {
 				rowIndexesWithEmptyCells.push(rowIndex)
 			}
 		}
@@ -126,14 +126,14 @@ export default class App extends React.Component {
 		return rowIndexesWithEmptyCells[this.getRandomArrayIndex(rowIndexesWithEmptyCells)]
 	}
 
-	nextPlayer = () => this.state.currentPlayer === Cell.PlayerX ? Cell.PlayerO : Cell.PlayerX
+	nextPlayer = () => this.state.currentPlayer === PlayerXDisplay ? PlayerODisplay : PlayerXDisplay
 
 	onGridUpdated = gridRows => {
 		if (this.state.gameEnded) {
 			return
 		}
 		let gameEnded = false
-		if (this.checkBoardWin() !== Cell.Blank || this.checkEndGame(gridRows)) {
+		if (this.checkBoardWin() !== BlankDisplay || this.checkEndGame(gridRows)) {
 			gameEnded = true
 		}
 		if (!gameEnded && this.state.currentAdversary === Adversary) {
