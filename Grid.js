@@ -1,43 +1,16 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import PropTypes from 'prop-types'
 
 import { BlankDisplay, Cell } from './Cell'
 
-class Grid extends React.Component {
-	render() {
-		const { currentPlayer, gridRows } = this.props
-
-		return (
-			<View style={styles.gridStyle}>
-				{gridRows.map((row, rowInd) => (
-					<View style={styles.rowStyle} key={`row${rowInd}`}>
-						{row.map((cell, cellInd) => (
-							<Cell
-								key={`cell${cellInd}`}
-								display={cell}
-								onCellPress={newValue =>
-									this.updateBoardCell(
-										rowInd,
-										cellInd,
-										currentPlayer
-									)
-								}
-							/>
-						))}
-					</View>
-				))}
-			</View>
-		)
-	}
-
-	updateBoardCell = (row, col, newVal) => {
+const Grid = ({ currentPlayer, gridRows, onGridUpdated }) => {
+	const updateBoardCell = (row, col, newVal) => {
 		// NOTE: need to create new array, because otherwise
 		// inner arrays would retain reference during slice
 		const updatedGrid = [
-			[...this.props.gridRows[0]],
-			[...this.props.gridRows[1]],
-			[...this.props.gridRows[2]]
+			[...gridRows[0]],
+			[...gridRows[1]],
+			[...gridRows[2]]
 		]
 		if (
 			updatedGrid[row] === undefined ||
@@ -51,8 +24,29 @@ class Grid extends React.Component {
 			return
 		}
 		updatedGrid[row][col] = newVal
-		this.props.onGridUpdated(updatedGrid)
+		onGridUpdated(updatedGrid)
 	}
+
+	return (
+		<View style={styles.gridStyle}>
+			{gridRows.map((row, rowInd) => (
+				<View style={styles.rowStyle} key={`row${rowInd}`}>
+					{row.map((cell, cellInd) => (
+						<Cell key={`cell${cellInd}`}
+							display={cell}
+							onCellPress={newValue =>
+								updateBoardCell(
+									rowInd,
+									cellInd,
+									currentPlayer
+								)
+							}
+						/>
+					))}
+				</View>
+			))}
+		</View>
+	)
 }
 
 /*
@@ -64,11 +58,6 @@ class Grid extends React.Component {
 			['X','','X']
 		]
 */
-Grid.propTypes = {
-	currentPlayer: PropTypes.string.isRequired,
-	gridRows: PropTypes.arrayOf(PropTypes.array).isRequired,
-	onGridUpdated: PropTypes.func.isRequired
-}
 
 const styles = StyleSheet.create({
 	gridStyle: {
