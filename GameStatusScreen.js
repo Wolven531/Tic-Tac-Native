@@ -1,45 +1,57 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
-import PropTypes from 'prop-types'
 
 import { BlankDisplay, PlayerXDisplay } from './Cell'
 
-class GameStatusScreen extends Component {
-	render() {
-		const { isGameOver, currentAdversary, currentPlayer, winner } = this.props
-		const hasWinner = winner !== BlankDisplay
-		const winnerDisplay = hasWinner ? `Winner: ${winner}` : 'Board has no winner'
+const GameStatusScreen = ({
+	currentAdversary,
+	currentPlayer,
+	isGameOver,
+	startNewGame,
+	winner
+}) => {
+	const hasWinner = winner !== BlankDisplay
+	const winnerDisplay = hasWinner
+		? `Winner: ${winner}`
+		: 'Board has no winner'
 
-		return (
-			<View style={styles.gameBox}>
+	return (
+		<View style={styles.gameBox}>
+			<View style={styles.currentPlayer}>
+				<Text>Current Turn:</Text>
+				<Text style={
+						currentPlayer === PlayerXDisplay
+							? styles.playerX
+							: styles.playerO
+					}>
+					{currentPlayer}
+				</Text>
+			</View>
+			{(hasWinner || isGameOver) && (
 				<View style={styles.currentPlayer}>
-					<Text>Current Turn:</Text>
-					<Text style={currentPlayer === PlayerXDisplay
-						? styles.playerX
-						: styles.playerO}>{currentPlayer}</Text>
-				</View>
-				{(hasWinner || isGameOver) && <View style={styles.currentPlayer}>
-					{hasWinner && <Text style={[winner === PlayerXDisplay
-						? styles.playerX
-						: styles.playerO, styles.winnerDisplay]}>{winnerDisplay}</Text>}
+					{hasWinner && (
+						<Text
+							style={[
+								styles.winnerDisplay,
+								winner === PlayerXDisplay
+									? styles.playerX
+									: styles.playerO
+							]}>
+							{winnerDisplay}
+						</Text>
+					)}
 					<Button
-						onPress={() => { this.props.startNewGame(currentPlayer, currentAdversary) }}
+						onPress={() => {
+							startNewGame(currentPlayer, currentAdversary)
+						}}
 						title="New Game"
 						color="gold"
 						accessibilityLabel="Start a new game of tic tac toe"
 					/>
-				</View>}
-			</View>
-		)
-	}
-}
-
-GameStatusScreen.propTypes = {
-	currentAdversary: PropTypes.string.isRequired,
-	currentPlayer: PropTypes.string.isRequired,
-	isGameOver: PropTypes.bool.isRequired,
-	startNewGame: PropTypes.func.isRequired,
-	winner: PropTypes.string.isRequired
+				</View>
+			)}
+		</View>
+	)
 }
 
 export { GameStatusScreen }
