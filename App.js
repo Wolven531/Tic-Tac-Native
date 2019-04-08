@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 
 import { BlankDisplay, PlayerODisplay, PlayerXDisplay } from './Cell'
 import { Adversary, GameConfigurationScreen } from './GameConfigurationScreen'
