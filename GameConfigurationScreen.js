@@ -1,3 +1,5 @@
+/// <reference types="prop-types" />
+
 import React, { Component } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
